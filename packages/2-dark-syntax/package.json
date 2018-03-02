@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+        "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117116-89753-1x16tpe.s3z6fos9k9"
+    ]
+  ],
+  "_from": "../d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+  "_id": "2-dark-syntax@1.1.0",
+  "_inCache": true,
+  "_location": "/2-dark-syntax",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+    "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+  "_shasum": "f60ce390e840d017466257d9262359952ddf89e9",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117116-89753-vvhq7t.on82hb0529/package.tgz",
+  "_where": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117116-89753-1x16tpe.s3z6fos9k9",
+  "bugs": {
+    "url": "https://github.com/herkulano/2-dark-syntax/issues"
+  },
+  "dependencies": {},
+  "description": "Based on one-dark-syntax with less saturated colors",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "homepage": "https://github.com/herkulano/2-dark-syntax#readme",
+  "keywords": [
+    "dark",
+    "blue",
+    "base16-tomorrow",
+    "syntax"
+  ],
+  "license": "MIT",
+  "name": "2-dark-syntax",
+  "optionalDependencies": {},
+  "readme": "## 2 dark syntax theme\n\n![2-dark-syntax](https://cloud.githubusercontent.com/assets/125300/22791004/a7c7a15e-eef0-11e6-9565-75c56ab66782.png)\n\nBased on [one-dark-syntax](https://github.com/atom/one-dark-syntax) with less saturated colors.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herkulano/2-dark-syntax.git"
+  },
+  "theme": "syntax",
+  "version": "1.1.0"
+}

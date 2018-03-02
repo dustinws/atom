@@ -1,0 +1,39 @@
+"*":
+  "atom-material-ui":
+    colors:
+      abaseColor: "#5c6bc0"
+      accentColor: "#dbc85a"
+      genAccent: true
+      paintCursor: true
+      predefinedColor: "Indigo"
+    tabs: {}
+    ui:
+      panelContrast: true
+      panelShadows: true
+  core:
+    disabledPackages: [
+      "expose"
+      "minimap"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "atom-material-ui"
+      "base16-tomorrow-light-theme"
+    ]
+  editor:
+    fontSize: 15
+  "exception-reporting":
+    userId: "2b4f3b2e-66d6-4029-87a2-5eceef4d1b24"
+  "linter-ui-default":
+    showPanel: true
+  "native-ui":
+    tabs:
+      autoResizeTabs: false
+    ui: {}
+  "project-manager":
+    alwaysOpenInSameWindow: true
+    sortBy: "last modified"
+  "tree-view": {}
+  "vim-mode-plus": {}
+  welcome:
+    showOnStartup: false

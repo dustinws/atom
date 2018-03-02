@@ -1,0 +1,37 @@
+[
+  {
+    title: "Node API"
+    group: "UrbanStems"
+    paths: [
+      "/Users/dustinstiles/Projects/Stems/api"
+    ]
+  }
+  {
+    title: "Admin"
+    group: "UrbanStems"
+    paths: [
+      "/Users/dustinstiles/Projects/Stems/admin"
+    ]
+  }
+  {
+    title: "WWW"
+    group: "UrbanStems"
+    paths: [
+      "/Users/dustinstiles/Projects/Stems/www"
+    ]
+  }
+  {
+    title: "Trimble Shipping Admin"
+    group: "UrbanStems"
+    paths: [
+      "/Users/dustinstiles/Projects/Stems/trimble-shipping-admin"
+    ]
+  }
+  {
+    title: "Carbon Mail Client"
+    group: "UrbanStems"
+    paths: [
+      "/Users/dustinstiles/Projects/Stems/carbon-mail-client"
+    ]
+  }
+]

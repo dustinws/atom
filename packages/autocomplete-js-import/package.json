@@ -1,0 +1,264 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+        "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117820-30696-l5z7ig.ren9epnwmi"
+    ]
+  ],
+  "_from": "../d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+  "_id": "autocomplete-js-import@1.4.0",
+  "_inCache": true,
+  "_location": "/autocomplete-js-import",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+    "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+  "_shasum": "160c3cda78289618044641d9ffbe470bf543cbaf",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117820-30696-kas4lg.ppc0l4bo6r/package.tgz",
+  "_where": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117820-30696-l5z7ig.ren9epnwmi",
+  "author": {
+    "name": "Daniel Garcia-Carrillo"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielGarcia-Carrillo/autocomplete-js-import/issues"
+  },
+  "dependencies": {
+    "fuzzy": "^0.1.1",
+    "glob": "^7.0.5",
+    "lodash.uniq": "^4.2.0"
+  },
+  "description": "Autocompletes commonjs and es6 import statements",
+  "devDependencies": {
+    "eslint": "^2.5.1"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/DanielGarcia-Carrillo/autocomplete-js-import#readme",
+  "keywords": [
+    "autocomplete",
+    "autocomplete-plus",
+    "fuzzy",
+    "atom",
+    "es6",
+    "es2015",
+    "require",
+    "import"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "autocomplete-js-import",
+  "optionalDependencies": {},
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provide"
+      }
+    }
+  },
+  "readme": "# autocomplete-js-import\nAutocomplete+ provider for JS import statements\n\nAutocompletes ES6 or CommonJS (node) style import statements with relative file matching, full project fuzzy file matching or packages found in `package.json`.\n\nBy default, plugin will only allow autocompletion in the form of relative paths:\n\n![import local files screenshot](https://raw.githubusercontent.com/DanielGarcia-Carrillo/autocomplete-js-import/master/misc/autocomplete-screenshot.png)\n\nNew Fuzzy matching (disabled by default)\n\n![](https://raw.githubusercontent.com/DanielGarcia-Carrillo/autocomplete-js-import/master/misc/fuzzy-matching.gif)\n\n# Additional features\n* When project dependencies autocompletion is enabled, every root `package.json` is watched for changes\n* Autocomplete hidden (dot) files (disabled by default)\n* Automatically remove unnecessary extensions (e.g. `./index.js` => `./index`) \n\n\n# TODO / Known Issues\n* Fuzzy pattern matching doesn't work with files added/removed after project is added\n* Attempting to fuzzy search with slashes or periods inserts suggestion incorrectly\n* If it wasn't compatible with Windows before, it sure isn't now (Unix path specific code)\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielGarcia-Carrillo/autocomplete-js-import.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.4.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "balanced-match",
+        "version": "1.0.0",
+        "path": "node_modules/balanced-match/index.js"
+      },
+      {
+        "name": "brace-expansion",
+        "version": "1.1.8",
+        "path": "node_modules/brace-expansion/index.js"
+      },
+      {
+        "name": "concat-map",
+        "version": "0.0.1",
+        "path": "node_modules/concat-map/index.js"
+      },
+      {
+        "name": "fs.realpath",
+        "version": "1.0.0",
+        "path": "node_modules/fs.realpath/index.js"
+      },
+      {
+        "name": "fuzzy",
+        "version": "0.1.3",
+        "path": "node_modules/fuzzy/lib/fuzzy.js"
+      },
+      {
+        "name": "glob",
+        "version": "7.1.2",
+        "path": "node_modules/glob/glob.js"
+      },
+      {
+        "name": "inflight",
+        "version": "1.0.6",
+        "path": "node_modules/inflight/inflight.js"
+      },
+      {
+        "name": "inherits",
+        "version": "2.0.3",
+        "path": "node_modules/inherits/inherits.js"
+      },
+      {
+        "name": "lodash.uniq",
+        "version": "4.5.0",
+        "path": "node_modules/lodash.uniq/index.js"
+      },
+      {
+        "name": "minimatch",
+        "version": "3.0.4",
+        "path": "node_modules/minimatch/minimatch.js"
+      },
+      {
+        "name": "once",
+        "version": "1.4.0",
+        "path": "node_modules/once/once.js"
+      },
+      {
+        "name": "path-is-absolute",
+        "version": "1.0.1",
+        "path": "node_modules/path-is-absolute/index.js"
+      },
+      {
+        "name": "wrappy",
+        "version": "1.0.2",
+        "path": "node_modules/wrappy/wrappy.js"
+      }
+    ],
+    "extensions": {
+      ".js": [
+        "lib/index.js",
+        "lib/project-deps.js",
+        "lib/provider.js",
+        "lib/settings.js",
+        "lib/utils.js",
+        "node_modules/balanced-match/index.js",
+        "node_modules/brace-expansion/index.js",
+        "node_modules/concat-map/example/map.js",
+        "node_modules/concat-map/index.js",
+        "node_modules/fs.realpath/index.js",
+        "node_modules/fs.realpath/old.js",
+        "node_modules/fuzzy/lib/fuzzy.js",
+        "node_modules/glob/common.js",
+        "node_modules/glob/glob.js",
+        "node_modules/glob/sync.js",
+        "node_modules/inflight/inflight.js",
+        "node_modules/inherits/inherits.js",
+        "node_modules/inherits/inherits_browser.js",
+        "node_modules/lodash.uniq/index.js",
+        "node_modules/minimatch/minimatch.js",
+        "node_modules/once/once.js",
+        "node_modules/path-is-absolute/index.js",
+        "node_modules/wrappy/wrappy.js"
+      ],
+      ".json": [
+        "node_modules/balanced-match/package.json",
+        "node_modules/brace-expansion/package.json",
+        "node_modules/concat-map/package.json",
+        "node_modules/fs.realpath/package.json",
+        "node_modules/fuzzy/bower.json",
+        "node_modules/fuzzy/component.json",
+        "node_modules/fuzzy/package.json",
+        "node_modules/glob/package.json",
+        "node_modules/inflight/package.json",
+        "node_modules/inherits/package.json",
+        "node_modules/lodash.uniq/package.json",
+        "node_modules/minimatch/package.json",
+        "node_modules/once/package.json",
+        "node_modules/path-is-absolute/package.json",
+        "node_modules/wrappy/package.json",
+        "package.json"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "lib",
+          "",
+          "spec"
+        ],
+        "dependencies": {
+          "fuzzy": "^0.1.1",
+          "glob": "^7.0.5",
+          "lodash.uniq": "^4.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/brace-expansion"
+        ],
+        "dependencies": {
+          "balanced-match": "^1.0.0",
+          "concat-map": "0.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/glob"
+        ],
+        "dependencies": {
+          "fs.realpath": "^1.0.0",
+          "inflight": "^1.0.4",
+          "inherits": "2",
+          "minimatch": "^3.0.4",
+          "once": "^1.3.0",
+          "path-is-absolute": "^1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/inflight"
+        ],
+        "dependencies": {
+          "once": "^1.3.0",
+          "wrappy": "1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/minimatch"
+        ],
+        "dependencies": {
+          "brace-expansion": "^1.1.7"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/once"
+        ],
+        "dependencies": {
+          "wrappy": "1"
+        }
+      }
+    ]
+  }
+}

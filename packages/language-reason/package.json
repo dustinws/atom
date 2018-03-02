@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+        "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117824-69488-1fqxlbd.79rvfxyldi"
+    ]
+  ],
+  "_from": "../d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+  "_id": "language-reason@0.0.4",
+  "_inCache": true,
+  "_location": "/language-reason",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+    "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+  "_shasum": "c73c88e4f5ae458df14b778190866744ff58f011",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-117824-69488-qysxc4.4xwafqd7vi/package.tgz",
+  "_where": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-117824-69488-1fqxlbd.79rvfxyldi",
+  "bugs": {
+    "url": "https://github.com/reasonml-editor/language-reason/issues"
+  },
+  "dependencies": {},
+  "description": "Reason language support in Atom",
+  "devDependencies": {},
+  "homepage": "https://github.com/reasonml-editor/language-reason#readme",
+  "name": "language-reason",
+  "optionalDependencies": {},
+  "private": true,
+  "readme": "# language-reason package\n\nSyntax highlighting for the [Reason](https://github.com/facebook/reason) language. If you've already installed the nuclide plugin, this one's unnecessary.\n\nThis is the source of truth for our syntax regex-based highlighting. Hopefully Sublime, Atom, VSCode and the rest all use this same one or derive the highlighting from it. The latter two already do so.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reasonml-editor/language-reason.git"
+  },
+  "version": "0.0.4",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

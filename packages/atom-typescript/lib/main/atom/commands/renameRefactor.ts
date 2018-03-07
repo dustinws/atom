@@ -1,21 +1,22 @@
-import {commands} from "./registry"
+import {addCommand} from "./registry"
 import {commandForTypeScript, getFilePathPosition} from "../utils"
 import {spanToRange} from "../utils"
 import {showRenameDialog} from "../views/renameView"
 
-commands.set("typescript:rename-refactor", deps => {
-  return async e => {
+addCommand("atom-text-editor", "typescript:rename-refactor", deps => ({
+  description: "Rename symbol under text cursor everywhere it is used",
+  async didDispatch(e) {
     if (!commandForTypeScript(e)) {
       return
     }
 
-    const location = getFilePathPosition()
+    const location = getFilePathPosition(e.currentTarget.getModel())
     if (!location) {
       e.abortKeyBinding()
       return
     }
     const client = await deps.getClient(location.file)
-    const response = await client.executeRename(location)
+    const response = await client.execute("rename", location)
     const {info, locs} = response.body!
 
     if (!info.canRename) {
@@ -39,19 +40,14 @@ commands.set("typescript:rename-refactor", deps => {
 
     if (newName !== undefined) {
       locs.map(async loc => {
-        const {buffer, isOpen} = await deps.getTypescriptBuffer(loc.file)
-
-        buffer.buffer.transact(() => {
-          for (const span of loc.locs) {
-            buffer.buffer.setTextInRange(spanToRange(span), newName)
-          }
+        await deps.withTypescriptBuffer(loc.file, async buffer => {
+          buffer.buffer.transact(() => {
+            for (const span of loc.locs) {
+              buffer.buffer.setTextInRange(spanToRange(span), newName)
+            }
+          })
         })
-
-        if (!isOpen) {
-          await buffer.buffer.save()
-          buffer.buffer.destroy()
-        }
       })
     }
-  }
-})
+  },
+}))

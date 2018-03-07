@@ -2,13 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("../utils");
 class CodefixProvider {
-    constructor(clientResolver) {
-        this.supportedFixes = new WeakMap();
+    constructor(clientResolver, errorPusher, withTypescriptBuffer) {
         this.clientResolver = clientResolver;
+        this.errorPusher = errorPusher;
+        this.withTypescriptBuffer = withTypescriptBuffer;
+        this.supportedFixes = new WeakMap();
     }
     async runCodeFix(textEditor, bufferPosition) {
         const filePath = textEditor.getPath();
-        if (!filePath || !this.errorPusher || !this.clientResolver || !this.getTypescriptBuffer) {
+        if (!filePath || !this.errorPusher || !this.clientResolver || !this.withTypescriptBuffer) {
             return [];
         }
         const client = await this.clientResolver.get(filePath);
@@ -16,7 +18,7 @@ class CodefixProvider {
         const requests = this.errorPusher
             .getErrorsAt(filePath, utils_1.pointToLocation(bufferPosition))
             .filter(error => error.code && supportedCodes.has(error.code))
-            .map(error => client.executeGetCodeFixes({
+            .map(error => client.execute("getCodeFixes", {
             file: filePath,
             startLine: error.start.line,
             startOffset: error.start.offset,
@@ -35,31 +37,32 @@ class CodefixProvider {
         }
         return results;
     }
+    async applyFix(fix) {
+        for (const f of fix.changes) {
+            await this.withTypescriptBuffer(f.fileName, async (buffer) => {
+                buffer.buffer.transact(() => {
+                    for (const edit of f.textChanges.reverse()) {
+                        buffer.buffer.setTextInRange(utils_1.spanToRange(edit), edit.newText);
+                    }
+                });
+            });
+        }
+    }
+    dispose() {
+        // NOOP
+    }
     async getSupportedFixes(client) {
         let codes = this.supportedFixes.get(client);
         if (codes) {
             return codes;
         }
-        const result = await client.executeGetSupportedCodeFixes();
+        const result = await client.execute("getSupportedCodeFixes", undefined);
         if (!result.body) {
             throw new Error("No code fixes are supported");
         }
         codes = new Set(result.body.map(code => parseInt(code, 10)));
         this.supportedFixes.set(client, codes);
         return codes;
-    }
-    async applyFix(fix) {
-        for (const f of fix.changes) {
-            const { buffer, isOpen } = await this.getTypescriptBuffer(f.fileName);
-            buffer.buffer.transact(() => {
-                for (const edit of f.textChanges.reverse()) {
-                    buffer.buffer.setTextInRange(utils_1.spanToRange(edit), edit.newText);
-                }
-            });
-            if (!isOpen) {
-                buffer.buffer.save().then(() => buffer.buffer.destroy());
-            }
-        }
     }
 }
 exports.CodefixProvider = CodefixProvider;

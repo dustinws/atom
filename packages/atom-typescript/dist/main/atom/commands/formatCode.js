@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const registry_1 = require("./registry");
 const utils_1 = require("../utils");
-registry_1.commands.set("typescript:format-code", deps => {
-    return async (e) => {
+registry_1.addCommand("atom-text-editor", "typescript:format-code", deps => ({
+    description: "Format code in currently active text editor",
+    async didDispatch(e) {
         if (!utils_1.commandForTypeScript(e)) {
             return;
         }
-        const editor = atom.workspace.getActiveTextEditor();
+        const editor = e.currentTarget.getModel();
         if (!editor) {
             e.abortKeyBinding();
             return;
@@ -37,16 +38,22 @@ registry_1.commands.set("typescript:format-code", deps => {
         const edits = [];
         // Collect all edits together so we can update everything in a single transaction
         for (const range of ranges) {
-            const result = await client.executeFormat(Object.assign({}, range, { file: filePath }));
+            const result = await client.execute("format", Object.assign({}, range, { file: filePath }));
             if (result.body) {
                 edits.push(...result.body);
             }
         }
         if (edits.length > 0) {
             editor.transact(() => {
-                utils_1.formatCode(editor, edits);
+                formatCode(editor, edits);
             });
         }
-    };
-});
+    },
+}));
+function formatCode(editor, edits) {
+    // The code edits need to be applied in reverse order
+    for (let i = edits.length - 1; i >= 0; i--) {
+        editor.setTextInBufferRange(utils_1.spanToRange(edits[i]), edits[i].newText);
+    }
+}
 //# sourceMappingURL=formatCode.js.map

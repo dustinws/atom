@@ -33,19 +33,14 @@ class MiniEditor {
         return this.model;
     }
     setReadOnly() {
-        if (this.props.readOnly) {
-            this.element.removeAttribute("tabindex"); // make read-only
-        }
-        else {
-            this.element.setAttribute("tabindex", "-1");
-        }
+        this.model.setReadOnly(!!this.props.readOnly);
     }
     setGrammar() {
         if (this.props.grammar) {
-            const grammar = atom.grammars.grammarForScopeName(this.props.grammar);
-            if (grammar) {
-                this.model.setGrammar(grammar);
-            }
+            atom.textEditors.setGrammarOverride(this.model, this.props.grammar);
+        }
+        else {
+            atom.textEditors.clearGrammarOverride(this.model);
         }
     }
 }

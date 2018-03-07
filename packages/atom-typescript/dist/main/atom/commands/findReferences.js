@@ -5,36 +5,35 @@ const utils_1 = require("../utils");
 const simpleSelectionView_1 = require("../views/simpleSelectionView");
 const etch = require("etch");
 const tsView_1 = require("../components/tsView");
-registry_1.commands.set("typescript:find-references", deps => {
-    return async (e) => {
+const highlightComponent_1 = require("../views/highlightComponent");
+registry_1.addCommand("atom-text-editor", "typescript:find-references", deps => ({
+    description: "Find where symbol under text cursor is referenced",
+    async didDispatch(e) {
         if (!utils_1.commandForTypeScript(e)) {
             return;
         }
-        const location = utils_1.getFilePathPosition();
+        const editor = e.currentTarget.getModel();
+        const location = utils_1.getFilePathPosition(editor);
         if (!location) {
             e.abortKeyBinding();
             return;
         }
         const client = await deps.getClient(location.file);
-        const result = await client.executeReferences(location);
+        const result = await client.execute("references", location);
         const res = await simpleSelectionView_1.selectListView({
-            items: result.body.refs,
-            itemTemplate: item => {
-                return (etch.dom("div", null,
-                    etch.dom("span", null, atom.project.relativize(item.file)),
+            items: result.body.refs.map(r => (Object.assign({}, r, { file: atom.project.relativize(r.file) }))),
+            itemTemplate: (item, ctx) => {
+                return (etch.dom("li", null,
+                    etch.dom(highlightComponent_1.HighlightComponent, { label: item.file, query: ctx.getFilterQuery() }),
                     etch.dom("div", { class: "pull-right" },
-                        "line: $",
+                        "line: ",
                         item.start.line),
                     etch.dom(tsView_1.TsView, { text: item.lineText.trim() })));
             },
             itemFilterKey: "file",
         });
-        if (res) {
-            atom.workspace.open(res.file, {
-                initialLine: res.start.line - 1,
-                initialColumn: res.start.offset - 1,
-            });
-        }
-    };
-});
+        if (res)
+            deps.getEditorPositionHistoryManager().goForward(editor, res);
+    },
+}));
 //# sourceMappingURL=findReferences.js.map

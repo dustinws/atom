@@ -8,8 +8,8 @@ interface Props extends JSX.Props {
 }
 
 export class MiniEditor implements JSX.ElementClass {
-  private model: TextEditor
   public element: TextEditorElement
+  private model: TextEditor
 
   constructor(public props: Props) {
     this.model = atom.workspace.buildTextEditor({
@@ -45,19 +45,14 @@ export class MiniEditor implements JSX.ElementClass {
   }
 
   private setReadOnly() {
-    if (this.props.readOnly) {
-      this.element.removeAttribute("tabindex") // make read-only
-    } else {
-      this.element.setAttribute("tabindex", "-1")
-    }
+    this.model.setReadOnly(!!this.props.readOnly)
   }
 
   private setGrammar() {
     if (this.props.grammar) {
-      const grammar = atom.grammars.grammarForScopeName(this.props.grammar)
-      if (grammar) {
-        this.model.setGrammar(grammar)
-      }
+      atom.textEditors.setGrammarOverride(this.model, this.props.grammar)
+    } else {
+      atom.textEditors.clearGrammarOverride(this.model)
     }
   }
 }

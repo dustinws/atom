@@ -7,7 +7,7 @@ const stream_1 = require("stream");
 const byline = require("byline");
 // Set this to true to start tsserver with node --inspect
 const INSPECT_TSSERVER = false;
-exports.commandWithResponse = new Set([
+const commandWithResponse = new Set([
     "compileOnSaveAffectedFileList",
     "compileOnSaveEmitFile",
     "completionEntryDetails",
@@ -24,6 +24,7 @@ exports.commandWithResponse = new Set([
     "reload",
     "rename",
     "navtree",
+    "navto",
 ]);
 class TypescriptServiceClient {
     constructor(tsServerPath, version) {
@@ -61,110 +62,11 @@ class TypescriptServiceClient {
         };
         this.callbacks = new callbacks_1.Callbacks(this.emitPendingRequests);
     }
-    executeChange(args) {
-        return this.execute("change", args);
-    }
-    executeClose(args) {
-        return this.execute("close", args);
-    }
-    executeCompileOnSaveAffectedFileList(args) {
-        return this.execute("compileOnSaveAffectedFileList", args);
-    }
-    executeCompileOnSaveEmitFile(args) {
-        return this.execute("compileOnSaveEmitFile", args);
-    }
-    executeCompletions(args) {
-        return this.execute("completions", args);
-    }
-    executeCompletionDetails(args) {
-        return this.execute("completionEntryDetails", args);
-    }
-    executeConfigure(args) {
-        return this.execute("configure", args);
-    }
-    executeDefinition(args) {
-        return this.execute("definition", args);
-    }
-    executeFormat(args) {
-        return this.execute("format", args);
-    }
-    executeGetCodeFixes(args) {
-        return this.execute("getCodeFixes", args);
-    }
-    executeGetSupportedCodeFixes() {
-        return this.execute("getSupportedCodeFixes", undefined);
-    }
-    executeGetErr(args) {
-        return this.execute("geterr", args);
-    }
-    executeGetErrForProject(args) {
-        return this.execute("geterrForProject", args);
-    }
-    executeOccurances(args) {
-        return this.execute("occurrences", args);
-    }
-    executeOpen(args) {
-        return this.execute("open", args);
-    }
-    executeProjectInfo(args) {
-        return this.execute("projectInfo", args);
-    }
-    executeQuickInfo(args) {
-        return this.execute("quickinfo", args);
-    }
-    executeReferences(args) {
-        return this.execute("references", args);
-    }
-    executeReload(args) {
-        return this.execute("reload", args);
-    }
-    executeRename(args) {
-        return this.execute("rename", args);
-    }
-    executeSaveTo(args) {
-        return this.execute("saveto", args);
-    }
-    executeNavTree(args) {
-        return this.execute("navtree", args);
-    }
     async execute(command, args) {
         if (!this.serverPromise) {
             throw new Error("Server is not running");
         }
-        return this.sendRequest(await this.serverPromise, command, args, exports.commandWithResponse.has(command));
-    }
-    on(name, listener) {
-        this.events.on(name, listener);
-        return () => {
-            this.events.removeListener(name, listener);
-        };
-    }
-    sendRequest(cp, command, args, expectResponse) {
-        const req = {
-            seq: this.seq++,
-            command,
-            arguments: args,
-        };
-        if (window.atom_typescript_debug) {
-            console.log("sending request", command, "with args", args);
-        }
-        setImmediate(() => {
-            try {
-                cp.stdin.write(JSON.stringify(req) + "\n");
-            }
-            catch (error) {
-                const callback = this.callbacks.remove(req.seq);
-                if (callback) {
-                    callback.reject(error);
-                }
-                else {
-                    console.error(error);
-                }
-            }
-        });
-        if (expectResponse) {
-            return this.callbacks.add(req.seq, command);
-        }
+        return this.sendRequest(await this.serverPromise, command, args, commandWithResponse.has(command));
     }
     startServer() {
         if (!this.serverPromise) {
@@ -206,6 +108,39 @@ class TypescriptServiceClient {
         }
         else {
             throw new Error(`Server already started: ${this.tsServerPath}`);
+        }
+    }
+    on(name, listener) {
+        this.events.on(name, listener);
+        return () => {
+            this.events.removeListener(name, listener);
+        };
+    }
+    sendRequest(cp, command, args, expectResponse) {
+        const req = {
+            seq: this.seq++,
+            command,
+            arguments: args,
+        };
+        if (window.atom_typescript_debug) {
+            console.log("sending request", command, "with args", args);
+        }
+        setImmediate(() => {
+            try {
+                cp.stdin.write(JSON.stringify(req) + "\n");
+            }
+            catch (error) {
+                const callback = this.callbacks.remove(req.seq);
+                if (callback) {
+                    callback.reject(error);
+                }
+                else {
+                    console.error(error);
+                }
+            }
+        });
+        if (expectResponse) {
+            return this.callbacks.add(req.seq, command);
         }
     }
 }

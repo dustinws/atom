@@ -1,7 +1,69 @@
+## 12.3.4
+
+-   Track exprTypeTooltip globally
+
+    This should help with tooltips getting "stuck" occasionally.
+
+## 12.3.3
+
+-   [Bufgix] invalid comparison
+
+## 12.3.2
+
+-   Fix TypeScript dependency
+
+## 12.3.1
+
+-   Use external highlighter in tsView instead of MiniEditor
+    -   Should be a little bit more efficient and avoids flickering due
+        to asynchronous tokenization
+-   Remove \$ from find-references line number
+-   Do not update selectView after resolution
+    -   Avoids unexpected behavior when selectView is canceled before it
+        loads
+-   Fix symbols-view offset
+    -   Going to an item from symbols-view was offset by 1 character to
+        the right
+-   Updates for Atom 1.24
+
+## 12.3.0
+
+-   Added an alternative to symbols-view (by russa)
+    -   For file symbols, the same engine is used as for outline view
+    -   For project symbols, `nav-to` tsserver command is used. It
+        requires at least one symbol to search for.
+-   Improvements to `typescript:return-from-declaration`
+    -   All navigation commands (`find-references`, `go-to-declaration`,
+        etc) save current editor position
+    -   Added new command `typescript:show-editor-position-history` to
+        show backlog of editor positions, that `return-from-declaration`
+        will go back to
+    -   Editor position history is persisted across Atom restarts (per
+        project). To avoid bloating, total number of history items is
+        limited to 100
+-   Added `typescript:reload-projects` command
+    -   Useful when tsserver isn't aware of new or removed files --
+        previously this required Atom restart
+-   Matched substring is highlighted in all select views (like Atom's
+    bundled symbols-view)
+-   Streamlined TypeScript file detection
+    -   TypeScript file extension is assumed to be one of ".ts", ".tst",
+        ".tsx"
+    -   If it's open in editor, grammar is assumed to be one of
+        "source.ts", "source.tsx"
+    -   A file has to be saved (i.e. have a file path)
+-   Many internal improvements
+    -   Completely reworked tooltip management
+    -   Most commands are bound to text-editor instead of the workspace
+    -   Object lifetime management improvements
+    -   Removed duplicate and obsolete code
+-   Fix README link to CHANGELOG (by Fedde Schaeffer)
+
 ## 12.2.0
 
--   Merge pull request #1402 "Center cursor after open in goToDeclaration" by Kai Curtis
--   Merge pull request #1280 "Re-adding semantic view" by russaa
+-   Merge pull request \#1402 "Center cursor after open in
+    goToDeclaration" by Kai Curtis
+-   Merge pull request \#1280 "Re-adding semantic view" by russaa
 
 ## 12.1.2
 

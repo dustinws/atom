@@ -2,19 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const registry_1 = require("./registry");
 const utils_1 = require("../utils");
-registry_1.commands.set("typescript:check-all-files", deps => {
-    return async (e) => {
+registry_1.addCommand("atom-text-editor", "typescript:check-all-files", deps => ({
+    description: "Typecheck all files in project related to current active text editor",
+    async didDispatch(e) {
         if (!utils_1.commandForTypeScript(e)) {
             return;
         }
-        const fpp = utils_1.getFilePathPosition();
+        const fpp = utils_1.getFilePathPosition(e.currentTarget.getModel());
         if (!fpp) {
             e.abortKeyBinding();
             return;
         }
         const { file } = fpp;
         const client = await deps.getClient(file);
-        const projectInfo = await client.executeProjectInfo({
+        const projectInfo = await client.execute("projectInfo", {
             file,
             needFileNameList: true,
         });
@@ -32,8 +33,9 @@ registry_1.commands.set("typescript:check-all-files", deps => {
             files.delete(evt.file);
             updateStatus();
         });
-        deps.statusPanel.update({ progress: { max, value: 0 } });
-        client.executeGetErrForProject({ file, delay: 0 });
+        const stp = deps.getStatusPanel();
+        stp.update({ progress: { max, value: 0 } });
+        client.execute("geterrForProject", { file, delay: 0 });
         function cancel() {
             files.clear();
             updateStatus();
@@ -41,12 +43,12 @@ registry_1.commands.set("typescript:check-all-files", deps => {
         function updateStatus() {
             if (files.size === 0) {
                 unregister();
-                deps.statusPanel.update({ progress: undefined });
+                stp.update({ progress: undefined });
             }
             else {
-                deps.statusPanel.update({ progress: { max, value: max - files.size } });
+                stp.update({ progress: { max, value: max - files.size } });
             }
         }
-    };
-});
+    },
+}));
 //# sourceMappingURL=checkAllFiles.js.map

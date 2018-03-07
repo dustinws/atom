@@ -4,25 +4,28 @@ const atom_1 = require("atom");
 const lodash_1 = require("lodash");
 const utils_1 = require("./atom/utils");
 const typescriptBuffer_1 = require("./typescriptBuffer");
-const tooltipManager = require("./atom/tooltipManager");
+const tooltipManager_1 = require("./atom/tooltipManager");
 class TypescriptEditorPane {
     constructor(editor, opts) {
+        this.editor = editor;
+        this.opts = opts;
+        this.isTypescript = false;
         // Path to the project's tsconfig.json
         this.configFile = "";
         this.isActive = false;
-        this.isTypescript = false;
         this.isOpen = false;
         this.occurrenceMarkers = [];
         this.subscriptions = new atom_1.CompositeDisposable();
         this.onActivated = () => {
             this.activeAt = Date.now();
             this.isActive = true;
-            if (this.isTypescript && this.filePath) {
+            const filePath = this.buffer.getPath();
+            if (this.isTypescript && filePath) {
                 this.opts.statusPanel.show();
                 // The first activation might happen before we even have a client
                 if (this.client) {
-                    this.client.executeGetErr({
-                        files: [this.filePath],
+                    this.client.execute("geterr", {
+                        files: [filePath],
                         delay: 100,
                     });
                     this.opts.statusPanel.update({ version: this.client.version });
@@ -30,48 +33,22 @@ class TypescriptEditorPane {
             }
             this.opts.statusPanel.update({ tsConfigPath: this.configFile });
         };
-        this.onChanged = () => {
-            if (!this.client)
-                return;
-            if (!this.filePath)
-                return;
-            this.opts.statusPanel.update({ buildStatus: undefined });
-            this.client.executeGetErr({
-                files: [this.filePath],
-                delay: 100,
-            });
-        };
         this.onDeactivated = () => {
             this.isActive = false;
             this.opts.statusPanel.hide();
         };
-        this.updateMarkers = lodash_1.debounce(async () => {
+        this.onChanged = () => {
             if (!this.client)
                 return;
-            if (!this.filePath)
+            const filePath = this.buffer.getPath();
+            if (!filePath)
                 return;
-            const pos = this.editor.getLastCursor().getBufferPosition();
-            try {
-                const result = await this.client.executeOccurances({
-                    file: this.filePath,
-                    line: pos.row + 1,
-                    offset: pos.column + 1,
-                });
-                this.clearOccurrenceMarkers();
-                for (const ref of result.body) {
-                    const marker = this.editor.markBufferRange(utils_1.spanToRange(ref));
-                    this.editor.decorateMarker(marker, {
-                        type: "highlight",
-                        class: "atom-typescript-occurrence",
-                    });
-                    this.occurrenceMarkers.push(marker);
-                }
-            }
-            catch (e) {
-                if (window.atom_typescript_debug)
-                    console.error(e);
-            }
-        }, 100);
+            this.opts.statusPanel.update({ buildStatus: undefined });
+            this.client.execute("geterr", {
+                files: [filePath],
+                delay: 100,
+            });
+        };
         this.onDidChangeCursorPosition = ({ textChanged }) => {
             if (!this.isTypescript || !this.isOpen)
                 return;
@@ -85,8 +62,7 @@ class TypescriptEditorPane {
             this.dispose();
         };
         this.onOpened = async () => {
-            const filePath = this.editor.getPath();
-            this.filePath = filePath;
+            const filePath = this.buffer.getPath();
             if (!filePath)
                 return;
             this.client = await this.opts.getClient(filePath);
@@ -96,13 +72,13 @@ class TypescriptEditorPane {
                 this.opts.statusPanel.update({ version: this.client.version });
             }
             if (this.isTypescript) {
-                this.client.executeGetErr({
+                this.client.execute("geterr", {
                     files: [filePath],
                     delay: 100,
                 });
                 this.isOpen = true;
                 try {
-                    const result = await this.client.executeProjectInfo({
+                    const result = await this.client.execute("projectInfo", {
                         needFileNameList: false,
                         file: filePath,
                     });
@@ -110,8 +86,8 @@ class TypescriptEditorPane {
                     if (this.isActive) {
                         this.opts.statusPanel.update({ tsConfigPath: this.configFile });
                     }
-                    utils_1.getProjectCodeSettings(filePath, this.configFile).then(options => {
-                        this.client.executeConfigure({
+                    utils_1.getProjectCodeSettings(this.configFile).then(options => {
+                        this.client.execute("configure", {
                             file: filePath,
                             formatOptions: options,
                         });
@@ -124,29 +100,22 @@ class TypescriptEditorPane {
             }
         };
         this.onSaved = () => {
-            this.filePath = this.editor.getPath();
             this.opts.onSave(this);
             this.compileOnSave();
         };
-        this.editor = editor;
-        this.filePath = editor.getPath();
-        this.opts = opts;
-        this.buffer = typescriptBuffer_1.TypescriptBuffer.construct(editor.buffer, opts.getClient)
-            .on("changed", this.onChanged)
-            .on("closed", this.opts.onClose)
-            .on("opened", this.onOpened)
-            .on("saved", this.onSaved);
-        this.isTypescript = utils_1.isTypescriptGrammar(editor);
-        // Add 'typescript-editor' class to the <atom-text-editor> where typescript is active.
-        if (this.isTypescript) {
-            atom.views.getView(this.editor).classList.add("typescript-editor");
-        }
-        this.subscriptions.add(editor.onDidChangeGrammar(() => {
-            this.isTypescript = utils_1.isTypescriptGrammar(editor);
-        }));
-        this.subscriptions.add(this.editor.onDidChangeCursorPosition(this.onDidChangeCursorPosition));
-        this.subscriptions.add(this.editor.onDidDestroy(this.onDidDestroy));
-        this.setupTooltipView();
+        this.checkIfTypescript = () => {
+            this.isTypescript = utils_1.isTypescriptEditorWithPath(this.editor);
+            // Add 'typescript-editor' class to the <atom-text-editor> where typescript is active.
+            if (this.isTypescript) {
+                atom.views.getView(this.editor).classList.add("typescript-editor");
+            }
+        };
+        this.updateMarkers = lodash_1.debounce(this.updateMarkers.bind(this), 100);
+        this.buffer = typescriptBuffer_1.TypescriptBuffer.create(editor.buffer, opts.getClient);
+        this.subscriptions.add(this.buffer.events.on("changed", this.onChanged), this.buffer.events.on("closed", this.opts.onClose), this.buffer.events.on("opened", this.onOpened), this.buffer.events.on("saved", this.onSaved));
+        this.checkIfTypescript();
+        this.subscriptions.add(editor.onDidChangePath(this.checkIfTypescript), editor.onDidChangeGrammar(this.checkIfTypescript), this.editor.onDidChangeCursorPosition(this.onDidChangeCursorPosition), this.editor.onDidDestroy(this.onDidDestroy));
+        this.subscriptions.add(new tooltipManager_1.TooltipManager(this.editor, opts.getClient));
     }
     dispose() {
         atom.views.getView(this.editor).classList.remove("typescript-editor");
@@ -158,21 +127,50 @@ class TypescriptEditorPane {
             marker.destroy();
         }
     }
+    async updateMarkers() {
+        if (!this.client)
+            return;
+        const filePath = this.buffer.getPath();
+        if (!filePath)
+            return;
+        const pos = this.editor.getLastCursor().getBufferPosition();
+        this.clearOccurrenceMarkers();
+        try {
+            const result = await this.client.execute("occurrences", {
+                file: filePath,
+                line: pos.row + 1,
+                offset: pos.column + 1,
+            });
+            for (const ref of result.body) {
+                const marker = this.editor.markBufferRange(utils_1.spanToRange(ref));
+                this.editor.decorateMarker(marker, {
+                    type: "highlight",
+                    class: "atom-typescript-occurrence",
+                });
+                this.occurrenceMarkers.push(marker);
+            }
+        }
+        catch (e) {
+            if (window.atom_typescript_debug)
+                console.error(e);
+        }
+    }
     async compileOnSave() {
         const { client } = this;
         if (!client)
             return;
-        if (!this.filePath)
+        const filePath = this.buffer.getPath();
+        if (!filePath)
             return;
-        const result = await client.executeCompileOnSaveAffectedFileList({
-            file: this.filePath,
+        const result = await client.execute("compileOnSaveAffectedFileList", {
+            file: filePath,
         });
         this.opts.statusPanel.update({ buildStatus: undefined });
         const fileNames = lodash_1.flatten(result.body.map(project => project.fileNames));
         if (fileNames.length === 0)
             return;
         try {
-            const promises = fileNames.map(file => client.executeCompileOnSaveEmitFile({ file }));
+            const promises = fileNames.map(file => client.execute("compileOnSaveEmitFile", { file }));
             const saved = await Promise.all(promises);
             if (!saved.every(res => !!res.body)) {
                 throw new Error("Some files failed to emit");
@@ -183,9 +181,6 @@ class TypescriptEditorPane {
             console.error("Save failed with error", error);
             this.opts.statusPanel.update({ buildStatus: { success: false, message: error.message } });
         }
-    }
-    setupTooltipView() {
-        tooltipManager.attach(this.editor);
     }
 }
 exports.TypescriptEditorPane = TypescriptEditorPane;

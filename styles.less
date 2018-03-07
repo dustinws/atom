@@ -1,26 +1,74 @@
 atom-text-editor,
 atom-workspace {
   font-family: "Operator Mono";
-  font-weight: 400;
-  line-height: 1.7;
+  font-weight: 200;
+  line-height: 2;
+  font-size: 16px;
+  .syntax--comment {
+    font-style: italic;
+  }
+  .syntax-keyword {
+    font-weight: 400;
+  }
 }
 
-atom-panel.tool-panel {
-  font-size: 0.88em;
+li.file.entry.list-item,
+.list-tree li.list-nested-item > .list-item {
+  font-size: 14px;
+  line-height: 35px;
+  font-weight: 200;
+  // font-style: italic;
 }
 
-.entity.other.attribute-name {
+.tab-bar {
+  height: 60px;
+  font-size: 13px;
   font-style: italic;
 }
 
-atom-text-editor.editor {
-  .syntax--entity.syntax--other.syntax--attribute-name {
-    font-style: italic;
+atom-panel {
+  font-size: 16px;
+}
+
+.status-bar {
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+}
+
+
+/******************  VIM MODE STATUS BAR ****************************************/
+
+// green
+@normal-bg: rgb(105, 238, 103);
+// blue
+@insert-bg: rgb(7, 193, 242);
+// yellowish
+@visual-bg: rgb(255, 206, 98);
+
+
+// change the current cursor-line background color
+// based on vim mode
+atom-text-editor.is-focused.editor {
+  .cursor-line {
+    // background: rgba(64, 64, 37, 5);
+    background: fadeout(@normal-bg, 80%);
+  }
+  &.insert-mode {
+    .cursor-line {
+      background: fadeout(@insert-bg, 90%);
+    }
   }
 }
 
-atom-text-editor::shadow{
-  .comment {
-    font-style: italic;
+// change cursor color in normal mode
+atom-text-editor.vim-mode.normal-mode.is-focused.editor {
+  .cursor {
+    background-color: @normal-bg;
   }
+}
+
+// visual mode and selected text
+atom-text-editor.editor .selection .region {
+  background-color: fadeout(@visual-bg, 75%);
 }

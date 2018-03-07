@@ -14,6 +14,7 @@
     disabledPackages: [
       "expose"
       "minimap"
+      "tabs"
     ]
     telemetryConsent: "no"
     themes: [
@@ -24,8 +25,7 @@
     fontSize: 15
   "exception-reporting":
     userId: "2b4f3b2e-66d6-4029-87a2-5eceef4d1b24"
-  "linter-ui-default":
-    showPanel: true
+  "linter-ui-default": {}
   "native-ui":
     tabs:
       autoResizeTabs: false
@@ -34,6 +34,7 @@
     alwaysOpenInSameWindow: true
     sortBy: "last modified"
   "tree-view": {}
-  "vim-mode-plus": {}
+  "vim-mode-plus":
+    setCursorToStartOfChangeOnUndoRedo: false
   welcome:
     showOnStartup: false

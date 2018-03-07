@@ -2,39 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
+        "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
-        "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
+        "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
+        "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-11827-44856-zewzs4.hm9cprdx6r"
+      "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-11827-48147-1h0f3zf.dzx672e29"
     ]
   ],
-  "_from": "../d-11827-44856-6zgqd8.vum78pvi/package.tgz",
-  "_id": "atom-typescript@12.3.4",
+  "_from": "../d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
+  "_id": "atom-typescript@12.3.5",
   "_inCache": true,
   "_location": "/atom-typescript",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
+    "raw": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
-    "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
+    "rawSpec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
+    "spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-11827-44856-6zgqd8.vum78pvi/package.tgz",
-  "_shasum": "1ea991dba0fa0ebab4884fdb7ff89c057a31a15e",
+  "_resolved": "file:../d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
+  "_shasum": "b0fd1e5cb4b42615f1b3b1c03c2dca9cc05dacb7",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-44856-6zgqd8.vum78pvi/package.tgz",
-  "_where": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-11827-44856-zewzs4.hm9cprdx6r",
+  "_spec": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/d-11827-48147-1rpl8rd.nhrxw7y14i/package.tgz",
+  "_where": "/private/var/folders/7s/mdb_1w6d003c5ncscs8yxhkr0000gn/T/apm-install-dir-11827-48147-1h0f3zf.dzx672e29",
   "activationCommands": {
     "atom-workspace": [
       "typescript:initialize-config"
@@ -182,5 +182,5 @@
     "test": "npm run typecheck && npm run lint && npm run prettier-check",
     "typecheck": "tsc --noEmit -p ./lib && tsc --noEmit -p ./scripts && tsc --noEmit -p ./spec"
   },
-  "version": "12.3.4"
+  "version": "12.3.5"
 }

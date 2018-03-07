@@ -3,35 +3,35 @@
     title: "Node API"
     group: "UrbanStems"
     paths: [
-      "/Users/dustinstiles/Projects/Stems/api"
+      "/Users/dustinstiles/code/sites/stems/urbanstems-node"
     ]
   }
   {
     title: "Admin"
     group: "UrbanStems"
     paths: [
-      "/Users/dustinstiles/Projects/Stems/admin"
+      "/Users/dustinstiles/code/sites/stems/urbanstems-admin"
     ]
   }
   {
     title: "WWW"
     group: "UrbanStems"
     paths: [
-      "/Users/dustinstiles/Projects/Stems/www"
+      "/Users/dustinstiles/code/sites/stems/urbanstems-www"
     ]
   }
   {
     title: "Trimble Shipping Admin"
     group: "UrbanStems"
     paths: [
-      "/Users/dustinstiles/Projects/Stems/trimble-shipping-admin"
+      "/Users/dustinstiles/code/sites/stems/trimble-shipping-admin"
     ]
   }
   {
     title: "Carbon Mail Client"
     group: "UrbanStems"
     paths: [
-      "/Users/dustinstiles/Projects/Stems/carbon-mail-client"
+      "/Users/dustinstiles/code/sites/stems/carbon-mail-client"
     ]
   }
 ]
